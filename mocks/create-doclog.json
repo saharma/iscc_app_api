@@ -1,0 +1,8 @@
+{
+  "body": "{\"medication\":\"hello world\",\"dosage\":\"hello.jpg\",\"question\":\"hello.jpg\",\"complete\":\"yes\"}",
+  "requestContext": {
+    "identity": {
+      "cognitoIdentityId": "USER-SUB-1234"
+    }
+  }
+}
