@@ -1,5 +1,5 @@
 {
-  "body": "{\"day\":\"hello world\",\"pain\":\"hello.jpg\",\"stress\":\"hellojpg\",\"stool\":\"hello.jpg\",\"bowelm\":\"hello.jpg\",\"attachment\":\"hello.jpg\"}",
+ "body": "{\"day\":\"goodbye\",\"pain\":\"hello.jpg\",\"stress\":\"hellojpg\",\"stool\":\"hello.jpg\",\"bowelm\":\"hello.jpg\",\"attachment\":\"hello.jpg\"}",
   "pathParameters": {
     "id": "0a1718e0-d896-11e8-83dd-35645ce07ed0"
   },

@@ -110,21 +110,3 @@ functions:
           method: put
           cors: true
           authorizer: aws_iam    
-   
-  delete:
-    handler: deleteSymptom.main
-    events:
-      - http:
-          path: symptoms/{id}
-          method: delete
-          cors: true
-          authorizer: aws_iam
-          
-  delete2:
-    handler: deleteDocLog.main
-    events:
-      - http:
-          path: doclog/{id}
-          method: delete
-          cors: true
-          authorizer: aws_iam      

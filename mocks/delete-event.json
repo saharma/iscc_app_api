@@ -1,5 +1,4 @@
 {
-  "body": "{\"medication\":\"goodbye world\",\"dosage\":\"hello.jpg\",\"question\":\"hellojpg\",\"complete\":\"no\"}",
   "pathParameters": {
     "id": "c3e42360-d9b0-11e8-9d66-472f8a80b71c"
   },

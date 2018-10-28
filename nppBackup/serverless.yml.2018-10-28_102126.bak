@@ -120,7 +120,7 @@ functions:
           cors: true
           authorizer: aws_iam
           
-  delete2:
+  delete:
     handler: deleteDocLog.main
     events:
       - http:
