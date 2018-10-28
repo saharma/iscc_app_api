@@ -1,0 +1,8 @@
+{
+  "body": "{\"day\":\"hello world\",\"pain\":\"hello.jpg\",\"stress\":\"heellojpg\",\"stool\":\"hello.jpg\",\"bowelm\":\"hello.jpg\",\"attachment\":\"hello.jpg\"}",
+  "requestContext": {
+    "identity": {
+      "cognitoIdentityId": "USER-SUB-1234"
+    }
+  }
+}

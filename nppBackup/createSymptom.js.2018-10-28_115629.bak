@@ -14,8 +14,6 @@ export async function main(event, context, callback) {
       stress: data.stress,
       stool: data.stool,
       bowelm: data.bowelm,
-	  bowelf: data.bowelf,
-	  bvisit: data.bvisit,
       attachment: data.attachment,
       createdAt: Date.now()
     }

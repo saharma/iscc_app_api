@@ -3,10 +3,10 @@ import { success, failure } from "./libs/response-lib";
 
 export async function main(event, context, callback) {
   const params = {
-    TableName: "symptoms",
-    KeyConditionExpression: "userId = :userId",
+    TableName: "food",
+    KeyConditionExpression: "foodId = :foodId",
     ExpressionAttributeValues: {
-      ":userId": event.requestContext.identity.cognitoIdentityId
+	   ":foodId": event.pathParameters.id
     }
   };
 

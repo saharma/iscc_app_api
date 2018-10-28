@@ -5,19 +5,13 @@ import { success, failure } from "./libs/response-lib";
 export async function main(event, context, callback) {
   const data = JSON.parse(event.body);
   const params = {
-    TableName: "symptoms",
+    TableName: "food",
     Item: {
       userId: event.requestContext.identity.cognitoIdentityId,
-      symId: uuid.v1(),
-      day: data.day,
-      pain: data.pain,
-      stress: data.stress,
-      stool: data.stool,
-      bowelm: data.bowelm,
-	  bowelf: data.bowelf,
-	  bvisit: data.bvisit,
-      attachment: data.attachment,
-      createdAt: Date.now()
+      foodId: uuid.v1(),
+      itemId: data.Id,
+	  date: data.date,
+	  createdAt: Date.now()
     }
   };
 
@@ -25,7 +19,6 @@ export async function main(event, context, callback) {
     await dynamoDbLib.call("put", params);
     callback(null, success(params.Item));
   } catch (e) {
-     console.log(e);
     callback(null, failure({ status: false }));
   }
 }

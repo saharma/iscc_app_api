@@ -1,4 +1,4 @@
-service: isccappapi
+service: iscc_app_api
 
 # Use the serverless-webpack plugin to transpile ES6
 plugins:
@@ -56,7 +56,7 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam      
-
+          
           
   createFood:
     handler: createFood.main
@@ -65,16 +65,17 @@ functions:
           path: food
           method: post
           cors: true
-          authorizer: aws_iam  
-
-  createDietLog:
+          authorizer: aws_iam   
+  
+  create2:
     handler: createDietLog.main
     events:
       - http:
           path: dietlog
           method: post
           cors: true
-          authorizer: aws_iam          
+          authorizer: aws_iam             
+
   get:
     handler: getSymptom.main
     events:
