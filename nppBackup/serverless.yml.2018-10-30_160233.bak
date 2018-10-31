@@ -8,10 +8,20 @@ plugins:
 # serverless-webpack configuration
 # Enable auto-packing of external modules
 custom:
+  # Our stage is based on what is passed in when running serverless
+  # commands. Or fallsback to what we have set in the provider section.
+  stage: ${opt:stage, self:provider.stage}
+  # Set the table name here so we can use it while testing locally
+  tableName: ${self:custom.stage}-symptoms
+  # Set our DynamoDB throughput for prod and all other non-prod stages.
+  tableThroughputs:
+    prod: 5
+    default: 1
+  tableThroughput: ${self:custom.tableThroughputs.${self:custom.stage}, self:custom.tableThroughputs.default}
+  # Load our webpack config
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules: true
-
 provider:
   name: aws
   runtime: nodejs8.10
@@ -20,6 +30,9 @@ provider:
 
   # 'iamRoleStatements' defines the permission policy for the Lambda function.
   # In this case Lambda functions are granted with permissions to access DynamoDB.
+  environment:
+    tableName: ${self:custom.tableName}
+
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -30,7 +43,10 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:eu-west-1:*:*"
+      # Restrict our IAM role permissions to
+      # the specific table for the stage
+      Resource:
+        - "Fn::GetAtt": [ symptoms, Arn ]
 
 functions:
   # Defines an HTTP API endpoint that calls the main function in create.js
@@ -58,7 +74,7 @@ functions:
           authorizer: aws_iam      
 
           
-  create3:
+  createFood:
     handler: createFood.main
     events:
       - http:
@@ -67,22 +83,21 @@ functions:
           cors: true
           authorizer: aws_iam  
 
-  create4:
+  createDietLog:
     handler: createDietLog.main
     events:
       - http:
           path: dietlog
           method: post
           cors: true
-          authorizer: aws_iam    
-          
+          authorizer: aws_iam          
   get:
     handler: getSymptom.main
     events:
       - http:
           path: symptoms/{id}
           method: get
-          cors: true
+          cors: truee
           authorizer: aws_iam  
 
   get2:
@@ -91,28 +106,9 @@ functions:
       - http:
           path: doclog/{id}
           method: get
-          cors: true
+          cors: truee
           authorizer: aws_iam         
 
-  get3:
-    handler: getFood.main
-    events:
-      - http:
-          path: food/{id}
-          method: get
-          cors: true
-          authorizer: aws_iam    
-
-
-  get4:
-    handler: getDietLog.main
-    events:
-      - http:
-          path: dietlog/{id}
-          method: get
-          cors: true
-          authorizer: aws_iam    
-          
   list:
     handler: listSymptom.main
     events:
@@ -131,24 +127,6 @@ functions:
           cors: true
           authorizer: aws_iam 
 
-  list3:
-    handler: listFood.main
-    events:
-      - http:
-          path: food
-          method: get
-          cors: true
-          authorizer: aws_iam
-  
-  list4:
-    handler: listDietLog.main
-    events:
-      - http:
-          path: dietlog
-          method: get
-          cors: true
-          authorizer: aws_iam
-          
   update:
     handler: updateSymptom.main
     events:
@@ -166,25 +144,7 @@ functions:
           method: put
           cors: true
           authorizer: aws_iam    
-  
-  update3:
-    handler: updateFood.main
-    events:
-      - http:
-          path: food/{id}
-          method: put
-          cors: true
-          authorizer: aws_iam    
-  
-  update4:
-    handler: updateDietLog.main
-    events:
-      - http:
-          path: dietlog/{id}
-          method: put
-          cors: true
-          authorizer: aws_iam    
-  
+   
   delete:
     handler: deleteSymptom.main
     events:
@@ -201,23 +161,9 @@ functions:
           path: doclog/{id}
           method: delete
           cors: true
-          authorizer: aws_iam 
-
-  delete3:
-    handler: deleteFood.main
-    events:
-      - http:
-          path: food/{id}
-          method: delete
-          cors: true
-          authorizer: aws_iam
-          
-  delete4:
-    handler: deleteDietLog.main
-    events:
-      - http:
-          path: dietlog/{id}
-          method: delete
-          cors: true
-          authorizer: aws_iam          
-
+          authorizer: aws_iam      
+# Create our resources with separate CloudFormation templates
+resources:
+  # DynamoDB
+  - ${file(resources/dynamodb-table.yml)}
+  - ${file(resources/cognito-user-pool.yml)}

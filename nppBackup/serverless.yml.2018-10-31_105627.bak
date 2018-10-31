@@ -58,7 +58,7 @@ functions:
           authorizer: aws_iam      
 
           
-  create3:
+  createFood:
     handler: createFood.main
     events:
       - http:
@@ -67,22 +67,21 @@ functions:
           cors: true
           authorizer: aws_iam  
 
-  create4:
+  createDietLog:
     handler: createDietLog.main
     events:
       - http:
           path: dietlog
           method: post
           cors: true
-          authorizer: aws_iam    
-          
+          authorizer: aws_iam          
   get:
     handler: getSymptom.main
     events:
       - http:
           path: symptoms/{id}
           method: get
-          cors: true
+          cors: truee
           authorizer: aws_iam  
 
   get2:
@@ -91,28 +90,9 @@ functions:
       - http:
           path: doclog/{id}
           method: get
-          cors: true
+          cors: truee
           authorizer: aws_iam         
 
-  get3:
-    handler: getFood.main
-    events:
-      - http:
-          path: food/{id}
-          method: get
-          cors: true
-          authorizer: aws_iam    
-
-
-  get4:
-    handler: getDietLog.main
-    events:
-      - http:
-          path: dietlog/{id}
-          method: get
-          cors: true
-          authorizer: aws_iam    
-          
   list:
     handler: listSymptom.main
     events:
@@ -130,7 +110,8 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam 
-
+          
+          
   list3:
     handler: listFood.main
     events:
@@ -138,17 +119,16 @@ functions:
           path: food
           method: get
           cors: true
-          authorizer: aws_iam
-  
+          authorizer: aws_iam  
+          
   list4:
-    handler: listDietLog.main
+    handler: listDocLog.main
     events:
       - http:
-          path: dietlog
+          path: food
           method: get
           cors: true
           authorizer: aws_iam
-          
   update:
     handler: updateSymptom.main
     events:
@@ -166,25 +146,7 @@ functions:
           method: put
           cors: true
           authorizer: aws_iam    
-  
-  update3:
-    handler: updateFood.main
-    events:
-      - http:
-          path: food/{id}
-          method: put
-          cors: true
-          authorizer: aws_iam    
-  
-  update4:
-    handler: updateDietLog.main
-    events:
-      - http:
-          path: dietlog/{id}
-          method: put
-          cors: true
-          authorizer: aws_iam    
-  
+   
   delete:
     handler: deleteSymptom.main
     events:
@@ -201,23 +163,4 @@ functions:
           path: doclog/{id}
           method: delete
           cors: true
-          authorizer: aws_iam 
-
-  delete3:
-    handler: deleteFood.main
-    events:
-      - http:
-          path: food/{id}
-          method: delete
-          cors: true
-          authorizer: aws_iam
-          
-  delete4:
-    handler: deleteDietLog.main
-    events:
-      - http:
-          path: dietlog/{id}
-          method: delete
-          cors: true
-          authorizer: aws_iam          
-
+          authorizer: aws_iam      
